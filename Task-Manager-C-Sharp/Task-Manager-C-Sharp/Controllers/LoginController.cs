@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Task_Manager_C_Sharp.Controllers.Dtos;
 using Task_Manager_C_Sharp.Models;
+using Task_Manager_C_Sharp.Repository;
 using Task_Manager_C_Sharp.Services;
 
 namespace Task_Manager_C_Sharp.Controllers
@@ -13,11 +14,13 @@ namespace Task_Manager_C_Sharp.Controllers
     {
 
         private readonly ILogger<LoginController> _logger;
+        private readonly IUserRepository _userRepository;
 
 
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController(ILogger<LoginController> logger, IUserRepository userRepository)
         {
             _logger = logger;
+            _userRepository = userRepository;
         }
 
 
@@ -39,21 +42,23 @@ namespace Task_Manager_C_Sharp.Controllers
                     });
                 }
 
-                var testUser = new User()
+                var user = _userRepository.GetUserbyEmail(request.Login);
+
+                if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
                 {
-                    Id = 1,
-                    UserName = "Matheus Henrique Silva",
-                    Email = "admin@admin.com",
-                    Password = "Admin1234@"
-                };
+                    return BadRequest(new ErrorResponseDto()
+                    {
+                        Status = StatusCodes.Status400BadRequest,
+                        ErrorMessage = "Usuario ou senha invalidos!"
+                    });
+                }
 
-                var token = TokenService.CreateToken(testUser);
-
+                var token = TokenService.CreateToken(user);
 
                 return Ok(new LoginResponseDto()
                 {
-                    Email = testUser.Email,
-                    UserName = testUser.UserName,
+                    Email = user.Email,
+                    UserName = user.UserName,
                     Token = token
                 });
             }

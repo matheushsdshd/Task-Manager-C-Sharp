@@ -9,6 +9,17 @@ namespace Task_Manager_C_Sharp.Repository.Impl
         {
             _context = context;
         }
+
+        public bool UserEmailExists(string email)
+        {
+            return _context.User.Any(user => user.Email.ToLower() == email.ToLower());
+        }
+
+        public User GetUserbyEmail(string email)
+        {
+            return _context.User.FirstOrDefault(user => user.Email.ToLower() == email.ToLower());
+        }
+
         public void Save(User user)
         {
             _context.User.Add(user);

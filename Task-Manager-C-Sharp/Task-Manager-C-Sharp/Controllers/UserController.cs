@@ -53,6 +53,8 @@ namespace Task_Manager_C_Sharp.Controllers
         {
             try
             {
+
+                user.Email = user.Email.ToLower();
                 var errorMessages = new List<string>();
 
                 Regex validateUserNameRegex = new Regex(@"^(?=[a-zA-Z._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$");
@@ -79,6 +81,11 @@ namespace Task_Manager_C_Sharp.Controllers
                     errorMessages.Add("Email invalido!");
                 }
 
+                if (_userRepository.UserEmailExists(user.Email))
+                {
+                    errorMessages.Add("Email já cadastrado");
+                }
+
 
                 if(errorMessages.Count > 0)
                 {
@@ -89,6 +96,7 @@ namespace Task_Manager_C_Sharp.Controllers
                     });
                 }
 
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                 _userRepository.Save(user);
 
                 return Ok(new{ msg= "Usuario Criado com sucesso" });
