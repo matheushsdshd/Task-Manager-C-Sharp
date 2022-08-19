@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Task_Manager_C_Sharp.Controllers.Dtos;
-using Task_Manager_C_Sharp.Models;
 using Task_Manager_C_Sharp.Repository;
 using Task_Manager_C_Sharp.Services;
 
@@ -14,13 +12,11 @@ namespace Task_Manager_C_Sharp.Controllers
     {
 
         private readonly ILogger<LoginController> _logger;
-        private readonly IUserRepository _userRepository;
 
 
-        public LoginController(ILogger<LoginController> logger, IUserRepository userRepository)
+        public LoginController(ILogger<LoginController> logger, IUserRepository userRepository) : base(userRepository)
         {
             _logger = logger;
-            _userRepository = userRepository;
         }
 
 

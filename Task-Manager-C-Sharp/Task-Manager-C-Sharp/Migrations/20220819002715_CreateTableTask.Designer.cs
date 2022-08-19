@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Task_Manager_C_Sharp.Models;
 
@@ -11,9 +12,10 @@ using Task_Manager_C_Sharp.Models;
 namespace Task_Manager_C_Sharp.Migrations
 {
     [DbContext(typeof(TaskManagerCSharpContext))]
-    partial class TaskManagerCSharpContextModelSnapshot : ModelSnapshot
+    [Migration("20220819002715_CreateTableTask")]
+    partial class CreateTableTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,7 @@ namespace Task_Manager_C_Sharp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Task_Manager_C_Sharp.Models.Assignment", b =>
+            modelBuilder.Entity("Task_Manager_C_Sharp.Models.Task", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +49,7 @@ namespace Task_Manager_C_Sharp.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Assignment");
+                    b.ToTable("Task");
                 });
 
             modelBuilder.Entity("Task_Manager_C_Sharp.Models.User", b =>
@@ -75,10 +77,10 @@ namespace Task_Manager_C_Sharp.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Task_Manager_C_Sharp.Models.Assignment", b =>
+            modelBuilder.Entity("Task_Manager_C_Sharp.Models.Task", b =>
                 {
                     b.HasOne("Task_Manager_C_Sharp.Models.User", "user")
-                        .WithMany("Assignments")
+                        .WithMany("Tasks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -88,7 +90,7 @@ namespace Task_Manager_C_Sharp.Migrations
 
             modelBuilder.Entity("Task_Manager_C_Sharp.Models.User", b =>
                 {
-                    b.Navigation("Assignments");
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

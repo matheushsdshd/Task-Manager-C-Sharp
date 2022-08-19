@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Task_Manager_C_Sharp.Models;
 
@@ -11,9 +12,10 @@ using Task_Manager_C_Sharp.Models;
 namespace Task_Manager_C_Sharp.Migrations
 {
     [DbContext(typeof(TaskManagerCSharpContext))]
-    partial class TaskManagerCSharpContextModelSnapshot : ModelSnapshot
+    [Migration("20220819051648_OpcionalUserAssignments")]
+    partial class OpcionalUserAssignments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

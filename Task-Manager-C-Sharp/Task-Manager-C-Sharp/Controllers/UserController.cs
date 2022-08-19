@@ -12,39 +12,11 @@ namespace Task_Manager_C_Sharp.Controllers
     public class UserController : BaseController
     {
 
-        private readonly ILogger<LoginController> _logger;
-        private readonly IUserRepository _userRepository;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<LoginController> logger, IUserRepository userRepository)
+        public UserController(ILogger<UserController> logger, IUserRepository userRepository) : base(userRepository)
         {
             _logger = logger;
-            _userRepository = userRepository;
-        }
-
-        [HttpGet]
-        public IActionResult getUser()
-        {
-            try
-            {
-                var testUser = new User()
-                {
-                    Id = 1,
-                    UserName = "Matheus Henrique Silva",
-                    Email = "admin@admin.com",
-                    Password = "Admin1234@"
-                };
-
-                return Ok(testUser);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Ocorreu um erro ao obter o usuario", ex);
-                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponseDto()
-                {
-                    Status = StatusCodes.Status500InternalServerError,
-                    ErrorMessage = "Ocorreu um erro ao obter o usuario"
-                });
-            }
         }
 
         [HttpPost]
@@ -83,7 +55,7 @@ namespace Task_Manager_C_Sharp.Controllers
 
                 if (_userRepository.UserEmailExists(user.Email))
                 {
-                    errorMessages.Add("Email já cadastrado");
+                    errorMessages.Add("Email já cadastrado!");
                 }
 
 
@@ -99,7 +71,7 @@ namespace Task_Manager_C_Sharp.Controllers
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                 _userRepository.Save(user);
 
-                return Ok(new{ msg= "Usuario Criado com sucesso" });
+                return Ok(new{ msg= "Usuario criado com sucesso!" });
             }
             catch (Exception ex)
             {

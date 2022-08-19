@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Task_Manager_C_Sharp.Models;
 
@@ -11,9 +12,10 @@ using Task_Manager_C_Sharp.Models;
 namespace Task_Manager_C_Sharp.Migrations
 {
     [DbContext(typeof(TaskManagerCSharpContext))]
-    partial class TaskManagerCSharpContextModelSnapshot : ModelSnapshot
+    [Migration("20220819034952_ChangeTableNameTaskToAssigniment")]
+    partial class ChangeTableNameTaskToAssigniment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,7 +80,7 @@ namespace Task_Manager_C_Sharp.Migrations
             modelBuilder.Entity("Task_Manager_C_Sharp.Models.Assignment", b =>
                 {
                     b.HasOne("Task_Manager_C_Sharp.Models.User", "user")
-                        .WithMany("Assignments")
+                        .WithMany("assignment")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -88,7 +90,7 @@ namespace Task_Manager_C_Sharp.Migrations
 
             modelBuilder.Entity("Task_Manager_C_Sharp.Models.User", b =>
                 {
-                    b.Navigation("Assignments");
+                    b.Navigation("assignment");
                 });
 #pragma warning restore 612, 618
         }

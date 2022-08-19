@@ -45,6 +45,7 @@ builder.Services.AddAuthentication(authentication =>
 builder.Services.AddCors();
 //Adding Scoped
 builder.Services.AddScoped<IUserRepository, UserRepositoryImpl>();
+builder.Services.AddScoped<IAssignmentRepository, AssignmentRepositoryImpl>();
 
 //------------------------------------
 

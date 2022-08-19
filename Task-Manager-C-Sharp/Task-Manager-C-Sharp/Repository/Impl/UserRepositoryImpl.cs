@@ -25,5 +25,10 @@ namespace Task_Manager_C_Sharp.Repository.Impl
             _context.User.Add(user);
             _context.SaveChanges();
         }
+
+        public User GetUserbyId(int userId)
+        {
+            return _context.User.FirstOrDefault(user => user.Id == userId);
+        }
     }
 }

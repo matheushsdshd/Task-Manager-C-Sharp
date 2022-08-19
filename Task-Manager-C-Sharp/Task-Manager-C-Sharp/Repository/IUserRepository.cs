@@ -7,5 +7,6 @@ namespace Task_Manager_C_Sharp.Repository
         public void Save(User user);
         bool UserEmailExists(string email);
         User GetUserbyEmail(string email);
+        User GetUserbyId(int userId);
     }
 }
